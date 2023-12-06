@@ -23,7 +23,7 @@ public class ServiceManager {
      * @return
      */
     public MemberDao memberDao() {
-        return new MemberDao() ;
+        return new CachedMemberDao() ;    // 기능을 확장한 클래스로 개선하기에 용이
     }
 
     /**
