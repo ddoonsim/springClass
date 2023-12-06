@@ -6,14 +6,9 @@ import java.time.LocalDateTime;
 
 public class Ex06 {
     public static void main(String[] args) {
-        // 회원가입
-        MemberDao memberDao = new MemberDao() ;
-        JoinValidator joinValidator = new JoinValidator(memberDao) ;
-        JoinService joinService = new JoinService(memberDao, joinValidator) ;
-
-        // 회원 목록 출력
-        ListService listService = new ListService() ;
-        listService.setMemberDao(memberDao);
+        // 객체 조립한 기능 완성 객체 ServiceManager 싱글톤 객체 사용하여 코드 단순화 & 유지와 보수에 용이
+        JoinService joinService = ServiceManager.getInstance().joinService() ;
+        ListService listService = ServiceManager.getInstance().listService() ;
 
         Member member = new Member() ;
         member.setUserId("user01");
