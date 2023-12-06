@@ -8,6 +8,10 @@ import java.util.Map;
 public class MemberDao {
     private static Map<String, Member> members = new HashMap<>() ;
 
+    /**
+     * Member 객체에 데이터를 추가하여 회원가입하는 메서드
+     * @param member
+     */
     public void register(Member member) {
         members.put(member.getUserId(), member) ;
     }

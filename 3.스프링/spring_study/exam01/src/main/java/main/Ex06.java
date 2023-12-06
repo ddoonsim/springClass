@@ -21,5 +21,9 @@ public class Ex06 {
         member.setConfirmPw("123456");
         member.setUserNm("사용자01");
         member.setRegDt(LocalDateTime.now());
+
+        joinService.join(member);
+
+        listService.print();
     }
 }

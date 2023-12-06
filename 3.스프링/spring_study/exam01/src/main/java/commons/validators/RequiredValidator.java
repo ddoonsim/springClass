@@ -14,7 +14,7 @@ public interface RequiredValidator {
      * @param e
      */
     default void checkRequired(String str, RuntimeException e) {
-        if(StringUtils.hasText(str)) {    // 스프링에 내장되어 있는 편의기능(StringUtils) 사용
+        if(!StringUtils.hasText(str)) {    // 스프링에 내장되어 있는 편의기능(StringUtils) 사용
             throw e ;
         }
     }
