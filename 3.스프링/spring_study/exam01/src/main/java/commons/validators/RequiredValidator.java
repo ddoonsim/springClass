@@ -18,4 +18,15 @@ public interface RequiredValidator {
             throw e ;
         }
     }
+
+    /**
+     * 참이 아닐 때 예외 발생
+     * @param result
+     * @param e
+     */
+    default void checkTrue(boolean result, RuntimeException e) {
+        if (!result) {
+            throw e ;
+        }
+    }
 }
