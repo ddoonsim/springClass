@@ -20,12 +20,21 @@ public interface RequiredValidator {
     }
 
     /**
-     * 참이 아닐 때 예외 발생
+     * 비밀번호 확인이 일치하지 않을 때 예외 발생
      * @param result
      * @param e
      */
     default void checkTrue(boolean result, RuntimeException e) {
         if (!result) {
+            throw e ;
+        }
+    }
+
+    /**
+     * 아이디가 존재하면(result가 참이면) 예외 발생
+     */
+    default void checkFalse(boolean result, RuntimeException e) {
+        if(result) {
             throw e ;
         }
     }
