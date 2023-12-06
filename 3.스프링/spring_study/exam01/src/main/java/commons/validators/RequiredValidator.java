@@ -1,5 +1,7 @@
 package commons.validators;
 
+import org.springframework.util.StringUtils;
+
 /**
  * 필수 항목 유효성(값 입력 필수) 체크
  */
@@ -12,7 +14,7 @@ public interface RequiredValidator {
      * @param e
      */
     default void checkRequired(String str, RuntimeException e) {
-        if(str == null || str.isBlank()) {
+        if(StringUtils.hasText(str)) {    // 스프링에 내장되어 있는 편의기능(StringUtils) 사용
             throw e ;
         }
     }

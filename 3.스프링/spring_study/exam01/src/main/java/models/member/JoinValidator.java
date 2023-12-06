@@ -14,6 +14,7 @@ public class JoinValidator implements Validator<Member>, RequiredValidator {
         String userNm = member.getUserNm();
 
         // 필수 항목은 null 또는 빈 공백 문자("  ") 체크
+        // RuntimeException e = new BadRequestException("str") ;
         checkRequired(userId, new BadRequestException("아이디를 입력하세요."));
         checkRequired(userPw, new BadRequestException("비밀번호를 입력하세요."));
         checkRequired(confirmPw, new BadRequestException("비밀번호 확인을 하세요."));
