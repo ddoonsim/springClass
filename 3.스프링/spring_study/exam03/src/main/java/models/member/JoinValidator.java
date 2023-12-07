@@ -5,12 +5,13 @@ import commons.validators.RequiredValidator;
 import commons.validators.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.stereotype.Component;
 
+@Component
 public class JoinValidator implements Validator<Member>, RequiredValidator {
 
     // MemberDao의 기능 중 일부를 가져오고 싶을 때 필드에 선언하고 생성자로 초기화
     @Autowired
-    @Qualifier("memberDao")
     private MemberDao memberDao ;
 
     public JoinValidator() {}

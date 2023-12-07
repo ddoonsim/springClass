@@ -20,7 +20,7 @@ public enum Transportation {
         }
     };
 
-    private final String title ;
+    private final String title ;    // : final 필드 (!= 상수)
 
     // 생성자 정의 가능
     Transportation(String title) {
