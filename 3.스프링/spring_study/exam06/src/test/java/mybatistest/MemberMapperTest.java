@@ -22,25 +22,29 @@ public class MemberMapperTest {
     @Test
     @DisplayName("회원 목록 조회 테스트")
     void memberListTest() {
-        List<Member> members = mapper.getMembers() ;
-        for (Member member : members) {
-            System.out.println(member);
-        }
+        Member member = Member.builder()
+                .userId("2")
+                .userNm("사용자").build() ;
+        List<Member> members = mapper.getMembers(member) ;
 
-        System.out.println(mapper.getClass().getName());  // jdk.proxy2.$Proxy28 : 프록시
+        for (Member m : members) {
+            System.out.println(m);
+        }
+        //System.out.println(mapper.getClass().getName());  // jdk.proxy2.$Proxy28 : 프록시
     }
 
     @Test
     @DisplayName("회원 추가 테스트")
     void memberInsertTest() {
         Member member = Member.builder()
-                .userId("USER202")
+                .userId("USER100")
                 .userPw("123456")
-                .userNm("사용자202")
-                .email("user202@test.org").build() ;
+                .userNm("사용자100")
+                .email("user100@test.org").build() ;
 
         int affectedRow = mapper.register(member);
         System.out.println(affectedRow);
+        System.out.println(member);
     }
 
     @Test
@@ -49,8 +53,8 @@ public class MemberMapperTest {
         Member member = Member.builder()
                 .userId("USER100")
                 .userPw("(수정)123456")
-                .userNm("(수정)사용자100")
-                .email("(수정)user100@test.org")
+                //.userNm("(수정)사용자100")
+                //.email("(수정)user100@test.org")
                 .build() ;
         int affectedRows = mapper.update(member) ;
         System.out.println(affectedRows);

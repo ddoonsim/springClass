@@ -4,20 +4,55 @@
         "https://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="mapper.MemberMapper">
     <select id="getMembers" resultType="models.member.Member">
+        <bind name="pattern1" value="'%' + _parameter.getUserId() + '%'"/>
+        <bind name="pattern2" value="'%' + _parameter.getUserNm() + '%'"/>
         SELECT * FROM MEMBER
+        <trim prefix="WHERE" suffixOverrides="AND | OR">
+            <if test="userId != null">
+                USER_ID LIKE #{pattern1} AND
+            </if>
+            <if test="userNm != null">
+                USER_NM LIKE #{pattern2} AND
+            </if>
+        </trim>
+        <!--
+        <where>
+            <if test="userId != null">
+                USER_ID LIKE #{userId}
+            </if>
+            <if test="userNm != null">
+                AND USER_NM LIKE #{userNm}
+            </if>
+        </where>
+        -->
     </select>
+
     <insert id="register">
+        <!-- 쿼리 수행 전에 수행하는 부분 -->
+        <selectKey keyProperty="userNo" order="BEFORE" resultType="long">
+            SELECT SEQ_MEMBER.nextval FROM DUAL
+        </selectKey>
+        <!-- 쿼리 수행 전에 수행하는 부분 -->
         INSERT INTO MEMBER  (USER_NO, USER_ID, USER_PW, USER_NM, EMAIL)
-        VALUES (SEQ_MEMBER.nextval, #{userId}, #{userPw}, #{userNm}, #{email})
+        VALUES (#{userNo}, #{userId}, #{userPw}, #{userNm}, #{email})
     </insert>
+
     <update id="update">
         UPDATE MEMBER
-            SET
-                USER_PW = #{userPw},
-                USER_NM = #{userNm},
-                EMAIL = #{email}
+            <set>
+                <if test="userPw != null">
+                    USER_PW = #{userPw},
+                </if>
+                <if test="userNm != null">
+                    USER_NM = #{userNm},
+                </if>
+                <if test="email != null">
+                    EMAIL = #{email}
+                </if>
+            </set>
         WHERE USER_ID = #{userId}
     </update>
+
     <delete id="delete">
         DELETE FROM MEMBER WHERE USER_ID = #{userId}
     </delete>
