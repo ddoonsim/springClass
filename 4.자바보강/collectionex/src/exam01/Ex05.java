@@ -2,6 +2,7 @@ package exam01;
 
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.ListIterator;
 
 public class Ex05 {
     public static void main(String[] args) {
@@ -26,6 +27,8 @@ public class Ex05 {
         }
 
         System.out.println("-------------------");
+
+        ListIterator<String> listIter = names.listIterator();
         /*
         for (String name : names) {   // 컬렉션과 배열에서 주로 사용되는 향상된 for문
             System.out.println(name);
