@@ -1,6 +1,10 @@
 package controllers;
 
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
@@ -8,15 +12,34 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller  // 요청과 응답을 중재 역할하는 빈
 public class HelloController {
 
+    @GetMapping("/hello")
+    public String hello(@RequestParam(name = "name", defaultValue = "기본값") String name,
+                        Model model) {
+        model.addAttribute("name", name) ;
+
+        return "hello" ;
+    }
+
     /**
      * 요청 메서드
-     */
+
     @GetMapping("/hello")
     public String hello(@RequestParam("name") String name,
                         @RequestParam("num") int num) {  // 요청 파라미터(쿼리스트링)를 name에 대입
         System.out.println(name + ", " + num);
         return "hello" ;   // /WEB-INF/templates/hello.jsp
-    }
+    }*/
+
+    /*
+    @GetMapping("/hello")
+    public String hello(HttpServletRequest request, HttpServletResponse response,
+                        HttpSession session) {
+        System.out.println("request : " + request);
+        System.out.println("response : " + response);
+        System.out.println("session : " + session);
+
+        return "hello" ;   // /WEB-INF/templates/hello.jsp
+    }*/
 
     /**
      * 요청에 의해 실행하는 메서드
