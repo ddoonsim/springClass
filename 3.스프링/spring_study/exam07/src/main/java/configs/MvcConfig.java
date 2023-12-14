@@ -3,8 +3,10 @@ package configs;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
+import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -73,13 +75,13 @@ public class MvcConfig implements WebMvcConfigurer {
         registry.viewResolver(thymeleafViewResolver());
     }
 
-    /**
-     * view 객체를 찾는 메서드, 경로 설정 필요
-     * @param registry
+    @Bean
+    public MessageSource messageSource() {  // 메서드 이름 동일하게 설정!!
+        ResourceBundleMessageSource ms = new ResourceBundleMessageSource() ;
+        ms.setDefaultEncoding("UTF-8");
+        ms.setBasenames("messages.commons");
 
-     @Override
-     public void configureViewResolvers(ViewResolverRegistry registry) {
-     registry.jsp("/WEB-INF/templates/", ".jsp") ;  // view가 있는 디렉토리 경로
-     }*/
+        return ms ;
+    }
 
 }
