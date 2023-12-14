@@ -1,5 +1,6 @@
 package configs;
 
+import commons.Utils;
 import nz.net.ultraq.thymeleaf.layoutdialect.LayoutDialect;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.ApplicationContext;
@@ -37,6 +38,12 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/") ;
         // 모든 요청 -> 컨트롤러 빈
         // 없는 경우 => 정적 자원 경로(css, js, 이미지)  ## 정적 자원은 보통 resources 하위에 저장함
+    }
+
+    @Override
+    public void addViewControllers(ViewControllerRegistry registry) {
+        registry.addViewController("/")
+                .setViewName("main/index") ;
     }
 
     @Bean    // ViewResolver를 설정
@@ -82,6 +89,11 @@ public class MvcConfig implements WebMvcConfigurer {
         ms.setBasenames("messages.commons");
 
         return ms ;
+    }
+
+    @Bean
+    public Utils utils(){
+        return new Utils() ;
     }
 
 }
