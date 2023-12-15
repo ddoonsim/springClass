@@ -1,8 +1,12 @@
 package controllers.member;
 
+import jakarta.validation.Valid;
+import lombok.RequiredArgsConstructor;
 import models.member.Member;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.Errors;
 import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDateTime;
@@ -12,16 +16,14 @@ import java.util.List;
 
 @Controller
 @RequestMapping("/member")    // 공통된 url패턴 정의하고, 하단에서는 /member 명시 X
+@RequiredArgsConstructor
 public class MemberController {
 
-    @ModelAttribute("hobbies")    // 모든 URL에서 공유할 데이터 설정 시
-    public List<String> hobbies() {
-        return Arrays.asList("자바", "오라클", "JSP", "스프링") ;
-    }
+    private final JoinValidator joinValidator ;
 
     @GetMapping("/join")   // /member/join으로 매핑
     //@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})  // 두 가지 매핑 방식 한번에 적용
-    public String join(@ModelAttribute("rjoin") RequestJoin form, Model model) {  // rjoin으로 속성명 바꿈
+    public String join(@ModelAttribute RequestJoin form, Model model) {  // rjoin으로 속성명 바꿈
 
         // 비어있더라도 객체 생성 필요 : NPE 예외 방지
         //model.addAttribute("requestJoin", new RequestJoin()) ;  <-- @ModelAttribute 어노테이션으로 자동화
@@ -32,7 +34,16 @@ public class MemberController {
 
 
     @PostMapping("/join")
-    public String joinPs(RequestJoin form, Model model) {
+    public String joinPs(@Valid RequestJoin form, Errors errors, Model model) {
+        // @Valid : 유효성 검증할 커맨드 객체임을 알려줌
+        // Errors 객체는 반드시 커맨드 객체의 바로 뒤에 위치해야 함!!
+
+        joinValidator.validate(form, errors);  // 유효성 검사 수행, 에러 => 에러 메세지 출력
+        if (errors.hasErrors()) {
+            // 검증 실패 시 실행 부분
+            return "member/join" ;
+        }
+
         //System.out.println(form);
         //model.addAttribute("requestJoin", form) ;
         // 커맨드 객체 RequestJoin -> requestJoin 이름으로 Model에 속성이 자동 추가
@@ -41,6 +52,7 @@ public class MemberController {
         // 이동 방식 : response.sendRedirect(request.getContextPath() + "/member/login")
         // 개발자 도구에서 응답 헤더 중 Location : /exam07/member/login
         return "redirect:/member/login" ;
+        //return "forward:/member/login" ;    <-- forward 방식으로 화면 전환
     }
 
     @GetMapping("/login")
