@@ -32,7 +32,7 @@ public class TestController {
     }
 
     @GetMapping("/cookie1/test2")
-    public String test2(@CookieValue("key2") String key2) {
+    public String test2(@CookieValue(name = "key2", defaultValue = "기본값") String key2) {
         System.out.printf("key2 = %s%n", key2);
         return "test" ;
     }
