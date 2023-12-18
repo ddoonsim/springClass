@@ -7,6 +7,7 @@ import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Import;
 import org.springframework.context.support.ResourceBundleMessageSource;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
@@ -19,6 +20,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
     // 프록시 형태로 필요한 HandlerMapping, HandlerAdapter, ViewResolver 객체를
     // 자동으로 스프링 컨테이너에 포함시킴
     // 따라서, @Bean 어노테이션으로 스프링 컨테이너에 각각 등록시킬 필요 X
+@Import(DbConfig.class)
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
