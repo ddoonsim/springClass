@@ -2,6 +2,7 @@ package controllers.member;
 
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
+import models.member.JoinService;
 import models.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -19,7 +20,9 @@ import java.util.List;
 @RequiredArgsConstructor
 public class MemberController {
 
+    // 의존성 자동 주입 처리
     private final JoinValidator joinValidator ;
+    private final JoinService joinService ;
 
     @GetMapping("/join")   // /member/join으로 매핑
     //@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})  // 두 가지 매핑 방식 한번에 적용
@@ -43,6 +46,9 @@ public class MemberController {
             // 검증 실패 시 실행 부분
             return "member/join" ;
         }
+
+        // 유효성 검사 통과 => 회원 가입 처리
+        joinService.join(form);
 
         //System.out.println(form);
         //model.addAttribute("requestJoin", form) ;

@@ -7,6 +7,9 @@
     <h1 th:text="#{회원가입}"></h1>
 
     <form method="post" th:action="@{ /member/join }" th:object="${requestJoin}">
+        <!--페이지 전체의 오류메세지
+        <div th:each="err : ${#fields.globalErrors()}" th:text="${err}"></div>-->
+        <!--회원가입 폼-->
         <dl>
             <dt th:text="#{아이디}"></dt>
             <dd>
@@ -44,7 +47,7 @@
         </dl>
 
         <div>
-            <input type="checkbox" name="agree" value="true" id="agree">
+            <input type="checkbox" name="agree" value="true" id="agree" th:field="*{agree}">
             <label for="agree" th:text="#{회원가입_약관에_동의합니다.}"></label>
             <div th:each="err : ${#fields.errors('agree')}" th:text="${err}"></div>
         </div>

@@ -5,12 +5,14 @@
 <mapper namespace="mapper.MemberMapper">
     <insert id="register">
         INSERT INTO MEMBER (USER_NO, USER_ID, USER_PW, USER_NM, EMAIL)
-            VALUES (SEQ_MEMBER.nextval, #{userId}, #{userPw}, #{userNm}, #{email})
+        VALUES (SEQ_MEMBER.nextval, #{userId}, #{userPw}, #{userNm}, #{email})
     </insert>
+
     <select id="exist" resultType="int">
         SELECT COUNT(*) FROM MEMBER WHERE USER_ID=#{userId}
     </select>
+
     <select id="get" resultType="models.member.Member">
-        SLELECT * FROM MEMBER ;
+        SELECT * FROM MEMBER WHERE USER_ID=#{userId}
     </select>
 </mapper>
