@@ -3,6 +3,7 @@ package controllers.member;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.member.JoinService;
+import models.member.LoginService;
 import models.member.Member;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -24,6 +25,7 @@ public class MemberController {
     private final JoinValidator joinValidator ;
     private final JoinService joinService ;
     private final LoginValidator loginValidator ;
+    private final LoginService loginService ;
 
     @GetMapping("/join")   // /member/join으로 매핑
     //@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})  // 두 가지 매핑 방식 한번에 적용
@@ -77,7 +79,8 @@ public class MemberController {
             return "member/login" ;
         }
 
-        // 로그인 처리 : 세션에 아이디 저장
+        // 로그인 처리 : 세션에 회원 정보 유지
+        loginService.login(form);
 
         // 로그인 성공 시 -> 메인페이지
         return "redirect:/" ;
