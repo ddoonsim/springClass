@@ -41,6 +41,7 @@ dependencies {
     implementation 'jakarta.validation:jakarta.validation-api:3.0.2'
     implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
     implementation 'org.mindrot:jbcrypt:0.4'
+    implementation 'org.mybatis:mybatis-typehandlers-jsr310:1.0.2'
 
     testImplementation "org.springframework:spring-test:$spring_version"
 
