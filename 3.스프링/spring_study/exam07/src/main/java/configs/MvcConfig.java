@@ -26,6 +26,17 @@ public class MvcConfig implements WebMvcConfigurer {
     @Autowired
     private ApplicationContext applicationContext ;  // 스프링 컨테이너
 
+    @Bean
+    public MemberOnlyInterceptor memberOnlyInterceptor() {
+        return new MemberOnlyInterceptor() ;
+    }
+
+    @Override    // 인터셉터 등록
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(memberOnlyInterceptor())
+                .addPathPatterns("/mypage/**") ;
+    }
+
     @Override
     public void configureDefaultServletHandling(DefaultServletHandlerConfigurer configurer) {
         configurer.enable();  // DefaultServletHttpRequestHandler, SimpleUrlHandlerMapping 빈 객체를 추가
