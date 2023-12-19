@@ -1,5 +1,6 @@
 package controllers.member;
 
+import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import models.member.JoinService;
@@ -84,6 +85,13 @@ public class MemberController {
 
         // 로그인 성공 시 -> 메인페이지
         return "redirect:/" ;
+    }
+
+    @RequestMapping("/logout")
+    public String logout(HttpSession session) {
+        session.invalidate();    // 세션 비우기
+
+        return "redirect:/member/login" ;
     }
 
     /**
