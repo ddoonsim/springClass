@@ -23,6 +23,7 @@ public class MemberController {
     // 의존성 자동 주입 처리
     private final JoinValidator joinValidator ;
     private final JoinService joinService ;
+    private final LoginValidator loginValidator ;
 
     @GetMapping("/join")   // /member/join으로 매핑
     //@RequestMapping(method = {RequestMethod.GET, RequestMethod.POST})  // 두 가지 매핑 방식 한번에 적용
@@ -62,14 +63,24 @@ public class MemberController {
     }
 
     @GetMapping("/login")
-    public String login() {
+    public String login(@ModelAttribute RequestLogin form) {
+
         return "member/login" ;
     }
 
     @PostMapping("/login")
-    public String loginPs(RequestLogin form) {
-        System.out.println(form);
-        return "member/login" ;
+    public String loginPs(@Valid RequestLogin form, Errors errors, Model model) {
+
+        loginValidator.validate(form, errors);
+
+        if(errors.hasErrors()) {  // 로그인 실패
+            return "member/login" ;
+        }
+
+        // 로그인 처리 : 세션에 아이디 저장
+
+        // 로그인 성공 시 -> 메인페이지
+        return "redirect:/" ;
     }
 
     /**
