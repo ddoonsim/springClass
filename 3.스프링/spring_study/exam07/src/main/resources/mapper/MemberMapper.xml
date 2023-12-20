@@ -16,18 +16,21 @@
         SELECT * FROM MEMBER WHERE USER_ID=#{userId}
     </select>
 
+    <!--CDATA 표시로 부등호 기호를 태그가 아닌 연산 기호로 인식하게 함-->
     <select id="getList" resultType="models.member.Member">
-        <![CDATA[
         SELECT * FROM MEMBER
         <where>
             <if test="sdate != null">
+                <![CDATA[
                 REG_DT >= #{sdate}
+                ]]>
             </if>
             <if test="edate != null">
+                <![CDATA[
                 REG_DT < #{edate}
+                ]]>
             </if>
         </where>
         ORDER BY REG_DT DESC
-        ]]>
     </select>
 </mapper>
