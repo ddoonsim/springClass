@@ -13,5 +13,22 @@
         <span th:each="err : ${#fields.errors('edate')}" th:text="${err}"></span>
         <button type="submit" th:text="#{조회하기}"></button>
     </form>
+    <hr>
+    <table border="1">
+        <thead>
+            <tr>
+                <th th:text="#{순번}"></th>
+                <th th:text="#{아이디}"></th>
+                <th th:text="#{회원명}"></th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr th:each="member, status : ${members}" th:object="${member}">
+                <td th:text="${status.count}"></td>
+                <td th:text="*{userId}"></td>
+                <td th:text="*{userNm}"></td>
+            </tr>
+        </tbody>
+    </table>
 </main>
 </html>

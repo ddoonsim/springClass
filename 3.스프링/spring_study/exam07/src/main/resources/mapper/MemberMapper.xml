@@ -27,7 +27,7 @@
             </if>
             <if test="edate != null">
                 <![CDATA[
-                REG_DT < #{edate}
+                AND REG_DT < #{edate}
                 ]]>
             </if>
         </where>
