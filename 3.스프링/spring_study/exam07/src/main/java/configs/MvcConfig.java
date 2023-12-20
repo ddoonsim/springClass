@@ -59,6 +59,9 @@ public class MvcConfig implements WebMvcConfigurer {
                 .addResourceLocations("classpath:/static/") ;
         // 모든 요청 -> 컨트롤러 빈
         // 없는 경우 => 정적 자원 경로(css, js, 이미지)  ## 정적 자원은 보통 resources 하위에 저장함
+
+        registry.addResourceHandler("/upload/**")    // ** : 모든 파일명
+                .addResourceLocations("file:///c:/uploads/") ;    // '///' --> 자바가 '//'로 인식
     }
 
     @Override
