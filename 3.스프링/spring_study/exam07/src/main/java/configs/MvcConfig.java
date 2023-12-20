@@ -8,7 +8,9 @@ import org.springframework.context.MessageSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Import;
+import org.springframework.context.support.PropertySourcesPlaceholderConfigurer;
 import org.springframework.context.support.ResourceBundleMessageSource;
+import org.springframework.core.io.ClassPathResource;
 import org.springframework.web.servlet.config.annotation.*;
 import org.thymeleaf.extras.java8time.dialect.Java8TimeDialect;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -20,7 +22,7 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
     // 프록시 형태로 필요한 HandlerMapping, HandlerAdapter, ViewResolver 객체를
     // 자동으로 스프링 컨테이너에 포함시킴
     // 따라서, @Bean 어노테이션으로 스프링 컨테이너에 각각 등록시킬 필요 X
-@Import(DbConfig.class)
+@Import(DbConfig2.class)
 public class MvcConfig implements WebMvcConfigurer {
 
     @Autowired
@@ -121,6 +123,19 @@ public class MvcConfig implements WebMvcConfigurer {
     @Bean
     public Utils utils(){
         return new Utils() ;
+    }
+
+    /**
+     * 프로퍼티 파일의 소스의 내용으로 코드를 교체하기 위해 프로퍼티 파일 로드
+     */
+    @Bean
+    public static PropertySourcesPlaceholderConfigurer configurer() {
+        PropertySourcesPlaceholderConfigurer conf = new PropertySourcesPlaceholderConfigurer() ;
+        conf.setLocations(
+                new ClassPathResource("application.properties")    // 설정 파일 로드
+        );
+
+        return conf ;
     }
 
 }
