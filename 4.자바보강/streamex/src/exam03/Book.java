@@ -46,4 +46,8 @@ public class Book implements Comparable<Book> {
     public String getTitle() {
         return title;
     }
+
+    public String getAuthor() {
+        return author;
+    }
 }
