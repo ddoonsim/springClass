@@ -24,6 +24,10 @@
                 configs.ControllerConfig
             </param-value>
         </init-param>
+        <multipart-config>
+            <max-file-size>20971520</max-file-size>  <!--최대 파일 크기 : 20메가바이트-->
+            <max-request-size>62914560</max-request-size>  <!--총 크기 : 60메가바이트-->
+        </multipart-config>
     </servlet>
 
     <servlet-mapping>
