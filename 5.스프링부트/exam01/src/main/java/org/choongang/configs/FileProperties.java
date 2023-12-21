@@ -4,7 +4,8 @@ import lombok.Data;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
- * 파일 업로드 설정에 필요한 데이터 클래스
+ * 특정 역할을 분담하는 클래스
+ *  : 파일 업로드 설정에 필요한 데이터 클래스
  */
 @Data
 @ConfigurationProperties(prefix = "file")   //

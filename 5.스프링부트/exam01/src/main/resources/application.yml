@@ -21,12 +21,18 @@ spring:
     livereload:
       enabled: true
 
-  #타임리프 설정
+  # 타임리프 설정
   thymeleaf:
     cache: false
     prefix: file:src/main/resources/templates/
 
-  #파일 업로드를 위한 multipart 설정
+  # 정적 자원(CSS, JS, 이미지) 설정
+    # --> 코드 변경 시, 바로 반영할 수 있게(서버 재 시작할 필요 X)
+  web:
+    resources:
+      staticLocations: file:src/main/resources/static/
+
+  # 파일 업로드를 위한 multipart 설정
   servlet:
     multipart:
       maxFileSize: 20MB
