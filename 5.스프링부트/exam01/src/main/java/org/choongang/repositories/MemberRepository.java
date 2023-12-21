@@ -10,7 +10,7 @@ import org.springframework.data.repository.query.Param;
 import java.util.List;
 
 /**
- * CrudRepository 인터페이스를 상속
+ * CrudRepository 인터페이스를 상속 --> 설정 코드 프록시 형태로 자동 추가
  *  ==> 쿼리문을 작성하지 않고 실행할 수 있는 메서드 사용 가능
  */
 public interface MemberRepository extends CrudRepository<Member, Long> {
