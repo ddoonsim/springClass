@@ -65,6 +65,7 @@ public class JdbcEx01 {
     @Test
     void test6() {    // 표준쿼리가 오라클에 호환이 되지 않기 때문에 오류 발생
 
+        // Pageable : 페이지네이션을 위한 정보 및 메서드를 모아 둔 인터페이스
         // Order는 Sort의 내부 static 클래스
         /*Pageable pageable = PageRequest.of(3, 10, Sort.by(Sort.Order.desc("regDt"), Sort.Order.asc("userId"))) ;*/
         Pageable pageable = PageRequest.of(3, 10, Sort.by(desc("regDt"), asc("userId"))) ;  // 코드 단순화
