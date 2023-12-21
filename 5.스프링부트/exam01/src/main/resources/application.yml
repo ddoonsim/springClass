@@ -42,3 +42,10 @@ spring:
 file:
   url: /upload/
   path: C:/uploads/
+
+# 로거 설정
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: trace

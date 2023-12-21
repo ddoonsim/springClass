@@ -8,7 +8,7 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
  *  : 파일 업로드 설정에 필요한 데이터 클래스
  */
 @Data
-@ConfigurationProperties(prefix = "file")   //
+@ConfigurationProperties(prefix = "file")   // 설정 파일에 있는 property를 클래스에 값을 가져와서(바인딩) 사용할 수 있게 해주는 어노테이션
 public class FileProperties {
 
     private String url ;    // file.url(/upload/)으로 자동완성
