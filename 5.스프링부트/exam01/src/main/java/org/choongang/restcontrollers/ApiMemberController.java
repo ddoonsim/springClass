@@ -2,6 +2,7 @@ package org.choongang.restcontrollers;
 
 import jakarta.validation.Valid;
 import lombok.extern.slf4j.Slf4j;
+import org.choongang.commons.BadRequestException;
 import org.choongang.commons.JSONData;
 import org.choongang.entities.Member;
 import org.springframework.http.HttpStatus;
@@ -32,7 +33,7 @@ public class ApiMemberController {
             log.info("에러 : {}", messages.toString());  // 콘솔에 에러 메세지 출력
 
             String message = messages.stream().collect(Collectors.joining(", "));
-            throw new RuntimeException(message) ;  // errorHandler로 예외 던짐
+            throw new BadRequestException(message) ;  // BadRequestException으로 400 에러 던짐
         }
         // 예외 X
         // status() : 응답 코드 --> 201으로 변경
@@ -91,12 +92,12 @@ public class ApiMemberController {
         System.out.println("처리...");
     }
 
-    @ExceptionHandler(Exception.class)    // 이 컨트롤러 내에서 발생한 모든 예외 공통 처리
+    /*@ExceptionHandler(Exception.class)    // 이 컨트롤러 내에서 발생한 모든 예외 공통 처리
     public ResponseEntity errorHandler(Exception e) {
         // return e.getMessage() ;   // 화면에 에러 메세지 출력
 
         // 응답 코드 변경 & 응답 body에 에러 메세지 출력
         // return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage()) ;
         return ResponseEntity.badRequest().body(e.getMessage()) ;
-    }
+    }    --> 공통 예외 클래스로 통일 */
 }
