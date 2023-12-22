@@ -29,6 +29,7 @@ public class CommonRestController {
         JSONData<Object> data = new JSONData<>() ;
         data.setStatus(status);
         data.setMessage(e.getMessage());
+        data.setSuccess(false);    // 에러 발생 시, success = false로 변경
 
         return ResponseEntity.status(status).body(data) ;
     }

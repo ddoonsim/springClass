@@ -53,7 +53,7 @@ public class ApiMemberController {
     /**
      * return : 객체 자체를 반환
      */
-    public JSONData<Member> info() {
+    public Member info() {
         Member member = Member.builder()
                 .userNo(1L)
                 .userId("user01")
@@ -64,7 +64,8 @@ public class ApiMemberController {
                 .modDt(LocalDateTime.now())
                 .build() ;
 
-        return new JSONData<>(member) ;    // JSONData 이용
+        return member ;
+        //return new JSONData<>(member) ;    // JSONData 이용
     }
 
     @GetMapping("/list")
