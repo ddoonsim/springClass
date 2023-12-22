@@ -19,7 +19,7 @@ public class Stat {
     // cron : 업데이트 예약 시간을 설정
     // @Scheduled(fixedDelay = 3000)  // 작업 완료 후 지연
     // @Scheduled(fixedRate = 3000)  // 작업 시간 포함 3초 마다 실행
-    @Scheduled(initialDelay = 3, timeUnit = TimeUnit.SECONDS)  // 작업 시작전 3초 대기
+    //@Scheduled(initialDelay = 3, timeUnit = TimeUnit.SECONDS)  // 작업 시작전 3초 대기
     public void orderStatProcess() {
         log.info("!주문 통계 진행 ..");
     }

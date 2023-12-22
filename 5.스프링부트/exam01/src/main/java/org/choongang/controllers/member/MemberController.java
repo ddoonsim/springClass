@@ -23,7 +23,7 @@ public class MemberController {
         return "/member/join" ;
     }
 
-    @ResponseBody    // 특정 메서드만 REST 방식으로 바꿀 때
+    @ResponseBody    // 특정 메서드만 REST 요청 방식으로 바꿀 때
     @GetMapping("/info")
     public Member info() {
         Member member = Member.builder()
