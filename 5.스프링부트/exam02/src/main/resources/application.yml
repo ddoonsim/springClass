@@ -19,7 +19,7 @@ spring:
         format_sql: true    # 쿼리문을 형식화
         use_sql_comments: true
     hibernate:
-      ddlAuto: create
+      ddlAuto: create    # 에플리케이션 시작 시에 기존 테이블 DROP, 새로 생성하게 설정
 
   # 라이브 리로드 설정
   devtools:
