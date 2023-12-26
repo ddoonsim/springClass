@@ -61,7 +61,8 @@ public class Ex02Test {
         em.flush();
         // @CreatedDate --> 엔티티의 생성 or 변경을 감지하여 날짜 저장하기 때문에 clear() 메서드 필요 X
 
-        System.out.println(member);
+        System.out.printf("createdAt=%s, modifiedAt=%s%n",
+                member.getCreatedAt(), member.getModifiedAt());
 
         try {
             Thread.sleep(3000);
@@ -74,6 +75,7 @@ public class Ex02Test {
         em.flush();
         // @LastModifiedDate --> clear() 메서드 필요 X
 
-        System.out.println(member);
+        System.out.printf("createdAt=%s, modifiedAt=%s%n",
+                member.getCreatedAt(), member.getModifiedAt());
     }
 }
