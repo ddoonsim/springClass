@@ -3,6 +3,9 @@ package org.choongang.entities;
 import jakarta.persistence.*;
 import lombok.Data;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Data
 @Entity
 public class BoardData extends Base {
@@ -20,4 +23,7 @@ public class BoardData extends Base {
         // 게시글에서 회원 조회
     @JoinColumn(name = "userNo")    // Member의 기본키와 조인되는 외래키로 설정되는 컬럼명을 직접 설정
     private Member member ;
+
+    @ManyToMany(fetch = FetchType.EAGER)    // 다대다 매핑
+    private List<Hashtag> tags = new ArrayList<>() ;
 }
