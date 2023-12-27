@@ -8,4 +8,6 @@ import org.springframework.data.jpa.repository.JpaRepository;
  */
 public interface MemberRepository extends JpaRepository<Member, Long> {    // 상속만으로도 기본적인 쿼리 수행 가능
     // 구현체는 자동으로 생성됨
+
+    Member findByEmail(String email) ;
 }
