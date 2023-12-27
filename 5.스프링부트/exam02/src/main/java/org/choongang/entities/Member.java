@@ -34,9 +34,13 @@ public class Member extends Base {    // 공통 속성화를 위한 클래스를
     @Column(length = 10)
     private MemberType type ;    // enum 클래스
 
-    @ToString.Exclude
+    @ToString.Exclude    // StackOverflowError 발생을 해결하기 위해 순환참조의 고리 끊기
     @OneToMany(mappedBy = "member", fetch = FetchType.EAGER)    // 1 : n 일대다 연관 관계 매핑
         // ManyToOne이 있어야 OneToMany가 가능
         // 회원 측에서 게시글 조회
     private List<BoardData> items = new ArrayList<>() ;
+
+    @OneToOne    // 일대일 매핑
+    @JoinColumn(name = "addressNo")
+    private Address address ;
 }
