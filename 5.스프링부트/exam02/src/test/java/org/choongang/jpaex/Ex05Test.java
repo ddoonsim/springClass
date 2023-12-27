@@ -1,9 +1,11 @@
 package org.choongang.jpaex;
 
+import com.querydsl.core.BooleanBuilder;
 import org.choongang.entities.BoardData;
 import org.choongang.entities.QBoardData;
 import org.choongang.repositories.BoardDataRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -65,5 +67,21 @@ public class Ex05Test {
         Pageable pageable = PageRequest.of(1, 3, Sort.by(desc("createdAt"))) ;
 
         Page<BoardData> data = repository.findAll(boardData.subject.contains("목"), pageable) ;
+    }
+
+    @Test
+    @DisplayName("조건식이 여러 개인 경우")
+    void test5() {
+        QBoardData boardData = QBoardData.boardData ;
+        BooleanBuilder andBuilder = new BooleanBuilder() ;
+        BooleanBuilder orBuilder = new BooleanBuilder() ;    // Predicate의 구현 클래스
+
+        andBuilder.and(boardData.seq.in(1L, 3L, 5L)) ;
+        orBuilder.or(boardData.subject.contains("10")).or(boardData.content.contains("5")) ;    // or로 연결된 조건문 생성
+        andBuilder.and(orBuilder) ;    // or조건을 소괄호로 묶어서 and조건과 합침
+
+        List<BoardData> items = (List<BoardData>) repository.findAll(andBuilder) ;
+        // BooleanBuilder가 Predicate의 구현 클래스이기 때문에 매개 변수에 BooleanBuilder의 객체 대입 가능
+        items.forEach(System.out::println);
     }
 }
