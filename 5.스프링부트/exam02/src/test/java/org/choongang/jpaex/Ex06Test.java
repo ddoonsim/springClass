@@ -1,9 +1,11 @@
 package org.choongang.jpaex;
 
+import com.querydsl.jpa.impl.JPAQueryFactory;
 import jakarta.persistence.EntityManager;
 import jakarta.persistence.PersistenceContext;
 import org.choongang.entities.BoardData;
 import org.choongang.entities.Member;
+import org.choongang.entities.QBoardData;
 import org.choongang.repositories.BoardDataRepository;
 import org.choongang.repositories.MemberRepository;
 import org.junit.jupiter.api.BeforeEach;
@@ -52,11 +54,13 @@ public class Ex06Test {
     }
 
     @Test
-    @DisplayName("추가된 데이터와 join 확인")
+    @DisplayName("지연 로딩")
     void test1() {
         BoardData data = boardDataRepository.findById(1L).orElse(null) ;
         Member member = data.getMember() ;
-        System.out.println(member);
+        String email = member.getEmail() ;    // 2차 쿼리 수행 --> 이때, join 수행
+        System.out.println(email);
+        //System.out.println(member);
     }
 
     @Test
@@ -65,5 +69,36 @@ public class Ex06Test {
         List<BoardData> items = member.getItems() ;
 
         items.forEach(System.out::println);    // BoardData의 toString() 호출
+    }
+
+    @Test
+    @DisplayName("n+1 문제")
+    void test3() {
+        List<BoardData> items = boardDataRepository.findAll() ;    // 전체 게시글 조회 --> 1차 쿼리 실행
+        for (BoardData item : items) {
+            Member member = item.getMember() ;
+            String email = member.getEmail() ;    // 2차 쿼리 실행 --> 게시글 개수 만큼 2차 쿼리 실행 ==> 성능 저하
+        }
+    }
+
+    @Test
+    @DisplayName("n+1 문제 해결책 1, 2 - JPQL, EntityGraph")
+    void test4() {
+        //List<BoardData> items = boardDataRepository.getSubjects("목") ;    // JPQL로 직접 조인 쿼리 작성
+
+        List<BoardData> items = boardDataRepository.findBySubjectContaining("목") ;    // EntityGraph로 즉시 조인 명시
+    }
+
+    @Test
+    @DisplayName("n+1 문제 해결책 3 - fetchJoin()")
+    void test5() {
+        QBoardData boardData = QBoardData.boardData ;
+        JPAQueryFactory jpaQueryFactory = new JPAQueryFactory(em) ;
+
+        List<BoardData> items = jpaQueryFactory.selectFrom(boardData)
+                .leftJoin(boardData.member)
+                .fetchJoin()    // 처음부터 조인
+                .where(boardData.subject.contains("목"))
+                .fetch() ;
     }
 }
