@@ -1,10 +1,13 @@
 package org.choongang.jpaex;
 
+import jakarta.persistence.EntityManager;
+import jakarta.persistence.PersistenceContext;
 import org.choongang.entities.BoardData;
 import org.choongang.entities.Hashtag;
 import org.choongang.repositories.BoardDataRepository;
 import org.choongang.repositories.HashtagRepository;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -23,6 +26,9 @@ public class Ex08Test {
     private BoardDataRepository boardDataRepository ;
     @Autowired
     private HashtagRepository hashtagRepository ;
+
+    @PersistenceContext
+    private EntityManager em ;
 
     @BeforeEach
     void init() {
@@ -45,6 +51,8 @@ public class Ex08Test {
         }
 
         boardDataRepository.saveAllAndFlush(items) ;
+        em.clear();    // ⚠️영속성 컨텍스트에 이미 존재하는 경우 쿼리를 실행하지 않고
+                       // 영속성 컨텍스트 안에서 꺼내기 때문에 동기화에 문제가 생김 --> clear() 영속성 비우기 실행!!
     }
 
     @Test
@@ -55,6 +63,7 @@ public class Ex08Test {
     }
 
     @Test
+    @DisplayName("태그로 게시글 검색")
     void test2() {
         Hashtag tag = hashtagRepository.findById("태그1").orElse(null) ;
         System.out.println(tag);
