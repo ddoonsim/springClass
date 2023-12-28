@@ -1,0 +1,51 @@
+## 개발 용 설정 파일
+# 서버 포트 변경
+server:
+  port: 3000
+
+spring:
+  # 프로필을 dev 설정파일로 변경
+#  profiles:
+#    active: dev
+  # dev 설정 파일로 변경되어서 밑에 코드는 실행 X
+
+  # 데이터베이스 설정
+  datasource:
+    driverClassName: oracle.jdbc.driver.OracleDriver
+    url: jdbc:oracle:thin:@localhost:1521:orcl
+    username: SPRING6
+    password: _aA123456
+
+  # 라이브 리로드 설정
+  devtools:
+    livereload:
+      enabled: true
+
+  # 타임리프 설정
+  thymeleaf:
+    cache: false
+    prefix: file:src/main/resources/templates/
+
+  # 정적 자원(CSS, JS, 이미지) 설정
+    # --> 코드 변경 시, 바로 반영할 수 있게(서버 재 시작할 필요 X)
+  web:
+    resources:
+      staticLocations: file:src/main/resources/static/
+
+  # 파일 업로드를 위한 multipart 설정
+  servlet:
+    multipart:
+      maxFileSize: 20MB
+      maxRequestSize: 60MB
+
+# 파일 업로드 설정
+file:
+  url: /upload/
+  path: C:/uploads/
+
+# 로거 설정
+logging:
+  level:
+    org:
+      springframework:
+        jdbc: trace
