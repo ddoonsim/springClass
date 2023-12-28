@@ -35,10 +35,11 @@ public class Member extends Base {    // 공통 속성화를 위한 클래스를
     private MemberType type ;    // enum 클래스
 
     @ToString.Exclude    // StackOverflowError 발생을 해결하기 위해 순환참조의 고리 끊기
-    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY)    // 1 : n 일대다 연관 관계 매핑
+    @OneToMany(mappedBy = "member", fetch = FetchType.LAZY, cascade = CascadeType.REMOVE)    // 1 : n 일대다 연관 관계 매핑
         // ManyToOne이 있어야 OneToMany가 가능
         // 회원 측에서 게시글 조회
         // OneToMany는 fetch의 기본값이 LAZY
+        // cascade 속성 : 영속성 전이 설정 | REMOVE : 부모 엔터티의 데이터 삭제 쿼리 실행 시, 자식 데이터 먼저 삭제 --> 부모 데이터 삭제
     private List<BoardData> items = new ArrayList<>() ;
 
     @OneToOne(fetch = FetchType.LAZY)    // 일대일 매핑
